@@ -6,7 +6,7 @@ Ao consultar um curso, exibir a lista de alunos matriculados.
 Validar o status do curso ao registrar uma nova matrícula.
 Atualizar o histórico do usuário ao completar um curso.
 
-Requisitos Funcionais
+Requisitos Funcionais: <br>
 Cadastro de Usuários
 
 Permitir que alunos e instrutores se registrem com informações básicas (nome, e-mail, senha).
@@ -30,7 +30,7 @@ Utilizar RabbitMQ para troca de informações, como notificação de conclusão 
 
 
 
-Requisitos Não Funcionais
+Requisitos Não Funcionais: <br>
 Desempenho
 
 Garantir que o tempo de resposta dos endpoints não ultrapasse 500ms.
