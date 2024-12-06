@@ -1,5 +1,5 @@
 # Plataforma de Cursos Online
-Microsserviços: <br> Usuários <br> Cursos <br> Matrículas <br>
+Microsserviços: <br> Alunos <br> Cursos <br> Matrículas <br>
 
 
 Fluxo: <br>
