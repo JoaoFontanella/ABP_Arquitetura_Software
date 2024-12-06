@@ -11,25 +11,17 @@ Requisitos Funcionais: <br>
 
 Cadastro de Usuários
 
-Permitir que alunos e instrutores se registrem com informações básicas (nome, e-mail, senha).
+Permitir que alunos e instrutores se registrem com informações básicas (nome, e-mail).
 Disponibilizar endpoint para consulta de detalhes do usuário.
 Gestão de Cursos
 
-Permitir que instrutores cadastrem cursos com título, descrição e módulos.
+Permitir que instrutores cadastrem cursos com título, descrição.
 Disponibilizar endpoint para listar e consultar cursos específicos.
 Gerenciamento de Matrículas
 
 Registrar a matrícula de um aluno em um curso.
 Validar dados de alunos e cursos antes de concluir a matrícula.
 Disponibilizar consulta ao histórico de matrículas do aluno.
-Histórico e Certificação
-
-Atualizar automaticamente o histórico do aluno após a conclusão de um curso.
-Gerar certificado de conclusão no final do curso.
-Comunicação entre Microsserviços
-
-Utilizar RabbitMQ para troca de informações, como notificação de conclusão de matrícula.
-
 
 
 Requisitos Não Funcionais: <br>
@@ -42,7 +34,6 @@ Escalabilidade
 Permitir que cada microsserviço seja escalado de forma independente.
 Segurança
 
-Implementar autenticação e autorização para proteger os endpoints.
 Garantir comunicação segura entre microsserviços.
 Disponibilidade
 
