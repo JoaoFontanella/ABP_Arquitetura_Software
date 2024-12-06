@@ -30,5 +30,23 @@ namespace CursoOnlineAPI.Controllers
             await _context.SaveChangesAsync();
             return Ok(aluno);
         }
+
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteAluno(int id)
+        {
+            var aluno = await _context.Alunos.FindAsync(id);
+            if (aluno == null)
+            {
+                return NotFound(new { Message = "Aluno não encontrado." });
+            }
+            var possuiMatriculas = await _context.Matrículas.AnyAsync(m => m.AlunoId == id);
+            if (possuiMatriculas)
+            {
+                return BadRequest(new { Message = "Não é possível excluir o aluno, pois ele está vinculado a um ou mais cursos." });
+            }
+            _context.Alunos.Remove(aluno);
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
     }
 }

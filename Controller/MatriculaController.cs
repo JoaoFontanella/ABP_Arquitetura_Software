@@ -56,6 +56,19 @@ namespace CursoOnlineAPI.Controllers
 
             return Ok(matricula);
         }
+        [HttpDelete("{id:int}")]
+        public async Task<ActionResult> DeleteMatricula(int id)
+        {
+            var matricula = await _context.Set<Matrículas>().FindAsync(id);
+            if (matricula == null)
+            {
+                return NotFound(new { Message = "Matrícula não encontrada." });
+            }
+            _context.Set<Matrículas>().Remove(matricula);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
 
     }
 }
