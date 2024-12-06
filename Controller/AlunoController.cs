@@ -15,17 +15,22 @@ namespace CursoOnlineAPI.Controllers
             _context = context;
         }
 
-        // Método GET para listar todos os alunos
         [HttpGet]
         public async Task<ActionResult<List<Alunos>>> GetAlunos()
         {
             return Ok(await _context.Alunos.ToListAsync());
         }
 
-        // Método POST para criar um novo aluno
         [HttpPost]
         public async Task<ActionResult> CreateAluno(Alunos aluno)
         {
+
+            var existingAluno = await _context.Alunos.FindAsync(aluno.Id);
+            if (existingAluno != null)
+            {
+                return BadRequest(new { Message = "Já existe um aluno com esse ID." });
+            }
+
             _context.Alunos.Add(aluno);
             await _context.SaveChangesAsync();
             return Ok(aluno);
@@ -46,7 +51,7 @@ namespace CursoOnlineAPI.Controllers
             }
             _context.Alunos.Remove(aluno);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(new { Message = "Aluno excluído com sucesso." });
         }
     }
 }

@@ -25,7 +25,14 @@ namespace CursoOnlineAPI.Controllers
 		[HttpPost]
 		public async Task<ActionResult> CreateCurso(Cursos curso)
 		{
-			_context.Cursos.Add(curso);
+
+            var existingCurso = await _context.Cursos.FindAsync(curso.Id);
+            if (existingCurso != null)
+            {
+                return BadRequest(new { Message = "Já existe um curso com esse ID." });
+            }
+
+            _context.Cursos.Add(curso);
 			await _context.SaveChangesAsync();
 			return Ok(curso);
 		}
@@ -48,7 +55,7 @@ namespace CursoOnlineAPI.Controllers
             }
             _context.Set<Cursos>().Remove(curso);
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(new { Message = "Curso excluído com sucesso." });
         }
     }
 }

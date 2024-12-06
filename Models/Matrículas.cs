@@ -6,8 +6,8 @@ namespace CursoOnlineAPI.Models
     {
         public int Id { get; set; }
         public int AlunoId { get; set; }
-        public Alunos? Alunos { get; set; } // Permite valor nulo
+        public Alunos? Alunos { get; set; }
         public int CursoId { get; set; }
-        public Cursos? Cursos { get; set; } // Permite valor nulo
+        public Cursos? Cursos { get; set; }
     }
 }

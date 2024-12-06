@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using CursoOnlineAPI.Models;
 using Microsoft.EntityFrameworkCore;
+using CursoOnlineAPI.Dtos;
 
 namespace CursoOnlineAPI.Controllers
 {
@@ -15,7 +16,6 @@ namespace CursoOnlineAPI.Controllers
             _context = context;
         }
 
-        // Método GET para listar todas as matrículas
         [HttpGet]
         public async Task<ActionResult<List<Matrículas>>> GetMatriculas()
         {
@@ -26,29 +26,32 @@ namespace CursoOnlineAPI.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> CreateMatricula(Matrículas matriculaRequest)
+        public async Task<ActionResult> CreateMatricula(MatriculaRequestDTO matriculaRequest)
         {
-            // Busca o aluno pelo ID
+
+            var existingMatricula = await _context.Matrículas.FindAsync(matriculaRequest.Id);
+            if (existingMatricula != null)
+            {
+                return BadRequest("Já existe uma matrícula com esse ID.");
+            }
+
             var aluno = await _context.Alunos.FindAsync(matriculaRequest.AlunoId);
             if (aluno == null)
             {
                 return NotFound("Aluno não encontrado.");
             }
 
-            // Busca o curso pelo ID
             var curso = await _context.Cursos.FindAsync(matriculaRequest.CursoId);
             if (curso == null)
             {
                 return NotFound("Curso não encontrado.");
             }
 
-            // Cria a matrícula
             var matricula = new Matrículas
             {
+                Id = matriculaRequest.Id,
                 AlunoId = matriculaRequest.AlunoId,
-                CursoId = matriculaRequest.CursoId,
-                Alunos = aluno,
-                Cursos = curso
+                CursoId = matriculaRequest.CursoId
             };
 
             _context.Matrículas.Add(matricula);
@@ -56,6 +59,7 @@ namespace CursoOnlineAPI.Controllers
 
             return Ok(matricula);
         }
+
         [HttpDelete("{id:int}")]
         public async Task<ActionResult> DeleteMatricula(int id)
         {
@@ -67,7 +71,7 @@ namespace CursoOnlineAPI.Controllers
             _context.Set<Matrículas>().Remove(matricula);
             await _context.SaveChangesAsync();
 
-            return NoContent();
+            return Ok(new { Message = "Matrícula excluída com sucesso." });
         }
 
     }
